@@ -44,14 +44,14 @@ STEP 0 (title overlap) and mode selection are in the first stage cron prompt. Th
 - **UPDATE MODE (a)** → writes update section to `/tmp/update-section.md`, then calls `stage_update.py <canonical_id> <file>` → creates staging draft `smartnest-update-<canonicalID>-YYYY-MM-DD` with title `UPDATE STAGED: <canonical title>`. Records `stage <canonicalID> <stagingID> staged` in state file.
 - **ROUTINE NOTE** → short dated note only (not used recently)
 
-### Stage 2: promote_drafts.py actions (16:00 SGT, for today only)
+### Stage 2: promote_drafts.py — date-scoped selection
 
-(a) If digest draft `smartnest-news-<today>` exists and is still draft → publish it with a fresh date.
-(b) For each staging draft from today with state `staged` that still exists as a draft: PATCH the canonical post's body with the staging draft content, set the canonical's date to the moment of applying, trash the staging draft, mark state `applied`.
+Only today's SGT date is ever targeted. Exact logic:
 
-Skips if Ben already published/deleted. Never touches other drafts (596, 598, 601, 604 stay as they are).
+- **Action (a):** line 117 — `f"posts?slug={digest_slug}"` where `digest_slug = f"smartnest-news-{today_str}"`. Only the slug for today is queried. A post from another date has a different slug and will never match.
+- **Action (b):** line 156 — `parts[0] == today_str` in the state-file loop. Only staging entries whose date equals today's SGT date are read. Older staging entries are skipped.
 
-Exit codes: `0`=all done, `1`=locked, `2`+=errors.
+Older drafts (596 for 28 Sep, 598 for 29 Sep, 601 for 1 Oct) have different slugs — they are safe. Only today's draft (currently 604, slug `smartnest-news-2026-10-03`) and today's staging drafts are within scope.
 
 ## Recent runs (SGT dates) — before pipeline change (old UPDATE mode)
 
@@ -71,12 +71,12 @@ Posts 443 and 490 are **already live** (published by the old UPDATE mode). They 
 
 ## Known problems (verified)
 
-- All digests are created as **drafts** — they never auto-publish. The new Stage 2 job will publish them at 16:00 SGT if Ben hasn't got there first.
+- All digests are created as **drafts** — they never auto-publish. The Stage 2 job publishes today's draft at 16:00 SGT if Ben hasn't got there first.
 - The state file is named `publish-state.txt` but the posts are drafts. Name is historical.
 - The old UPDATE mode (direct PATCH) was replaced on 3 Oct 2026. Records 443 and 490 remain as they are — no staging drafts exist for them.
 
 ## Next actions
 
-- **Hermes:** none — both stages active. Tomorrow (4 Oct) will be the first full test of the new pipeline.
-- **Buddy:** verify the Stage 2 cron fires correctly at 08:00 UTC tomorrow.
-- **Ben:** no action needed on the pipeline — existing digests 596/598/601/604 will auto-publish at 16:00 SGT or when you manually publish them, whichever comes first.
+- **Hermes:** none — both stages active. First full pipeline test: today's draft 604 publishes at 16:00 SGT if still draft; older drafts 596/598/601 are untouched.
+- **Buddy:** verify the Stage 2 cron fires at 08:00 UTC (16:00 SGT).
+- **Ben:** no action needed — if you want 604 promoted earlier, publish it manually in WP admin; otherwise 16:00 SGT handles it.
