@@ -24,10 +24,11 @@ Project facts only: status, what is built or live, decisions made, what is block
 <project>/
   status-buddy.md   owner: Buddy   (business/GTM state, decisions, cross-project context)
   dev-hermes.md     owner: Hermes  (development state: branches, builds, deploys, bugs)
+  ops-hermes.md     owner: Hermes  (instead of dev-hermes.md when Hermes runs a job rather than builds code)
 ```
 
 ## Projects
 | Project | Status | Notes |
 |---|---|---|
 | AgenCHub | active | `agenchub/status-buddy.md`, `agenchub/dev-hermes.md` |
-| Smartnest | not yet created | next |
+| Smartnest | active | `smartnest/status-buddy.md`, `smartnest/ops-hermes.md` |
