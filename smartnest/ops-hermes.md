@@ -8,60 +8,75 @@ updated: 2026-10-03
 
 Read-only for Buddy. Buddy's status note is `status-buddy.md`.
 
-## The job
+## Two pipeline stages
+
+Digests written at 07:00 SGT (23:00 UTC). Drafts promoted to live at 16:00 SGT (08:00 UTC). Everything goes through a draft stage first — nothing reaches the live site without one.
+
+### Stage 1: Daily digest job (07:00 SGT)
 
 | Field | Value |
 |-------|-------|
 | Cron job ID | `aeca18e932f4` |
 | Name | SG Property Daily Digest + SmartNest Draft |
-| Schedule | `0 23 * * *` (23:00 UTC = 07:00 SGT next day) |
-| Script | `/opt/data/Hermes/Property-Digest/publish_digest.py` (Python) |
-| State file | `/opt/data/Hermes/Property-Digest/publish-state.txt` — records each date, WP post ID and slug for posts created |
-| Lock | `/tmp/smartnest-publish.lock` (flock-based run guard) |
-| Credentials env | `/opt/data/Hermes/wp-credentials.env` (never in this repo) |
-| Skill | none — the cron prompt contains all the agent logic inline |
+| Schedule | `0 23 * * *` (23:00 UTC = 07:00 SGT) |
+| Scripts | `publish_digest.py` (NEW POST) or `stage_update.py` (UPDATE mode) |
+| State file | `/opt/data/Hermes/Property-Digest/publish-state.txt` |
+| Lock | `/tmp/smartnest-publish.lock` (shared by both scripts) |
+| Credentials env | `/opt/data/Hermes/wp-credentials.env` |
 | Model | `minimax/minimax-m3` |
+
+### Stage 2: Draft promotion job (16:00 SGT)
+
+| Field | Value |
+|-------|-------|
+| Cron job ID | `7cab7ec45bbf` |
+| Name | SmartNest Draft Promotion (16:00 SGT daily) |
+| Schedule | `0 8 * * *` (08:00 UTC = 16:00 SGT) |
+| Script | `/opt/data/home/.hermes/scripts/promote_drafts_wrapper.sh` → `promote_drafts.py` |
+| Lock | `/tmp/smartnest-promote.lock` |
+| Mode | `no_agent=true` — pure script, no LLM tokens |
 
 ## Modes
 
-STEP 0 (title overlap) and mode selection are in the **cron prompt logic**, not in `publish_digest.py`. The script only creates a new WP draft post from `latest.md`. The agent decides:
+STEP 0 (title overlap) and mode selection are in the first stage cron prompt. The agent decides which script to call:
 
-- **NEW POST mode** — if the lead story doesn't overlap an existing canonical → calls publish_digest.py → creates a draft with deterministic slug `smartnest-news-YYYY-MM-DD`
-- **UPDATE MODE (a)** — if the story overlaps an existing canonical → PATCH the canonical's content and reschedule to surface at top-of-feed at 15:00 SGT the next day. No new post created, so state file has no entry.
-- **ROUTINE NOTE mode** — for slow-news days (hasn't been used on any of the tracked runs)
+- **NEW POST** → calls `publish_digest.py` → creates draft `smartnest-news-YYYY-MM-DD`
+- **UPDATE MODE (a)** → writes update section to `/tmp/update-section.md`, then calls `stage_update.py <canonical_id> <file>` → creates staging draft `smartnest-update-<canonicalID>-YYYY-MM-DD` with title `UPDATE STAGED: <canonical title>`. Records `stage <canonicalID> <stagingID> staged` in state file.
+- **ROUTINE NOTE** → short dated note only (not used recently)
 
-Exit codes from publish_digest.py: 0=published, 1=locked, 2=state-file skip, 3=WP slug/title match skip, 4=input error, 5+=failure.
+### Stage 2: promote_drafts.py actions (16:00 SGT, for today only)
 
-## Recent runs (SGT dates)
+(a) If digest draft `smartnest-news-<today>` exists and is still draft → publish it with a fresh date.
+(b) For each staging draft from today with state `staged` that still exists as a draft: PATCH the canonical post's body with the staging draft content, set the canonical's date to the moment of applying, trash the staging draft, mark state `applied`.
 
-All runs produced a digest archive file. Verified against: the archive mtime, the state file, and the WP REST API (authenticated, 3 Oct 2026).
+Skips if Ben already published/deleted. Never touches other drafts (596, 598, 601, 604 stay as they are).
 
-| Day (SGT) | Mode | Result | WP post | Evidence |
-|-----------|------|--------|---------|----------|
-| 27 Sep | NEW POST | Draft created | 590 (published by Ben) | state: `2026-09-27 590 smartnest-news-2026-09-27`; WP API: status=publish |
-| 28 Sep | NEW POST | Draft created | 596 (draft) | state: `2026-09-28 596`; WP API: status=draft, slug `smartnest-news-2026-09-28` |
-| 29 Sep | NEW POST | Draft created | 598 (draft) | state: `2026-09-29 598`; WP API: status=draft |
-| 30 Sep | UPDATE (a) | Patched canonical 490 | — | Archive footer: "UPDATE MODE (a): HDB million-dollar canonical PATCHED"; WP API: post 490 modified `2026-09-30T07:09:49`, re-scheduled to `2026-10-01T07:00:00` |
-| 1 Oct | NEW POST | Draft created | 601 (draft) | state: `2026-10-01 601`; WP API: status=draft |
-| 2 Oct | UPDATE (a) | Patched canonical 443 | — | Archive footer: "two-speed canonical (ID 443) PATCHED"; WP API: post 443 modified `2026-10-02T07:08:19`, re-scheduled to `2026-10-03T07:00:00` |
-| 3 Oct | NEW POST | Draft created | 604 (draft) | state: `2026-10-03 604`; WP API: status=draft |
+Exit codes: `0`=all done, `1`=locked, `2`+=errors.
 
-**Why Buddy's public REST API check showed no digest after 27 Sep:** Posts 596, 598, 601, 604 exist only as **drafts** (not published). Only 590 was published. The UPDATE-mode runs modified existing posts (443, 490) without creating new ones, so no new digest posts appear in the public API.
+## Recent runs (SGT dates) — before pipeline change (old UPDATE mode)
 
-## What touched posts 443 and 490
+These runs used the old UPDATE mode (direct PATCH of canonical). New runs will use the staging-draft pipeline instead.
 
-Both were modified by the cron's UPDATE MODE (a):
+| Day | Mode | Result | WP post | Verified |
+|-----|------|--------|---------|----------|
+| 27 Sep | NEW POST | Draft created | 590 (published by Ben) | state file + WP API |
+| 28 Sep | NEW POST | Draft created | 596 (draft) | state file + WP API |
+| 29 Sep | NEW POST | Draft created | 598 (draft) | state file + WP API |
+| 30 Sep | UPDATE (a) | **Old: patched canonical 490 directly** | post 490 modified `2026-09-30T07:09:49` | archive footer `"UPDATE MODE (a)"` |
+| 1 Oct | NEW POST | Draft created | 601 (draft) | state file + WP API |
+| 2 Oct | UPDATE (a) | **Old: patched canonical 443 directly** | post 443 modified `2026-10-02T07:08:19` | archive footer `"UPDATE MODE (a)"` |
+| 3 Oct | NEW POST | Draft created | 604 (draft) | state file + WP API |
 
-- **Post 490** (`hdb-million-dollar-flats-vs-falling-resale-index`): Modified `2026-09-30T07:09:49` by the 30 Sep cron run. The digest (archive `2026-09-30.md`) had a Pinnacle@Duxton S\$1.72M record that overlapped with 490's thesis, so UPDATE mode patched 490 with the new data points and re-scheduled it to 1 Oct at 07:00 UTC.
-- **Post 443** (`singapore-two-speed-property-market`): Modified `2026-10-02T07:08:19` by the 2 Oct cron run. The digest (archive `2026-10-02.md`) had the Q3 URA flash showing a re-ordered two-speed dynamic, so UPDATE mode patched 443 with Q3 data and re-scheduled to 3 Oct at 07:00 UTC.
+Posts 443 and 490 are **already live** (published by the old UPDATE mode). They do not need publishing.
 
 ## Known problems (verified)
 
-- All digests are created as **drafts** — they never auto-publish, so they don't appear on the public site until Ben publishes them. Only post 590 has been published. The other 4 drafts (596, 598, 601, 604) plus 2 update patches are waiting.
-- The state file is named `publish-state.txt` but the posts it records are drafts, not published. Name is misleading but functional.
+- All digests are created as **drafts** — they never auto-publish. The new Stage 2 job will publish them at 16:00 SGT if Ben hasn't got there first.
+- The state file is named `publish-state.txt` but the posts are drafts. Name is historical.
+- The old UPDATE mode (direct PATCH) was replaced on 3 Oct 2026. Records 443 and 490 remain as they are — no staging drafts exist for them.
 
 ## Next actions
 
-- **Ben:** review and publish the 4 queued draft digests (596, 598, 601, 604) and the 2 patched canons (443, 490) — all surfaced correctly with deterministic slugs and AEO formatting.
-- **Hermes:** none — job runs daily.
-- **Buddy:** verify the drafts are visible to Ben in the WP admin (they should appear in Posts → Drafts).
+- **Hermes:** none — both stages active. Tomorrow (4 Oct) will be the first full test of the new pipeline.
+- **Buddy:** verify the Stage 2 cron fires correctly at 08:00 UTC tomorrow.
+- **Ben:** no action needed on the pipeline — existing digests 596/598/601/604 will auto-publish at 16:00 SGT or when you manually publish them, whichever comes first.
