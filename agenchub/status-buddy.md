@@ -20,7 +20,8 @@ SaaS for Singapore housing-estate managing agents (MAs / MCSTs). Modules built a
 
 ## Verified 3 Oct 2026
 - `feat/multi-tenant` on origin is at `3ff16ef8` (pushed by Hermes; verified by Buddy with `git ls-remote`). Contains 16 earlier commits plus document library CRUD, admin-login page and logo rebranding.
-- **Not yet reconciled by Buddy:** how `feat/multi-tenant` relates to `main` (production). Hermes to describe in `dev-hermes.md`.
+- **Branch relationship, verified by Buddy against GitHub (bare clone, 3 Oct 2026):** `main` = `05d4c48` (live production code). `feat/multi-tenant` (`3ff16ef8`) shares **no common ancestor with `main`**; it is 26 commits on top of `archive/pre-hetzner-migration` (`7723d09`, the July pre-Hetzner history that `main` was deliberately reset away from on 22 Aug 2026). `git diff main feat/multi-tenant` = 166 files, +2,938 / -16,215. **Do not merge it into `main`**: it would delete large parts of current production, including the Sep 2026 security fixes. Its genuinely new work (document library, admin-login page, logo, seed data, PDPA pages) would have to be ported selectively onto a branch cut from `main`, and reviewed first (e.g. the 22 Aug audit found hardcoded demo credentials on login pages).
+- `dev-hermes.md` as pushed in `a507157` says `7723d09` is `main`, that the branches share a merge-base, and that the work is "all additive, meant to merge". Those three statements do not match the repo. Hermes to correct its own note.
 
 ## Decisions in force
 - Scope: ops-only (no financials, no hardware). Provisional exception: integrate REALTIMME, Tier 1 only, behind a default-off per-estate toggle (3 Sep). Ben's stance 3 Oct: stay tight, flexible if the market demands.
@@ -39,4 +40,5 @@ SaaS for Singapore housing-estate managing agents (MAs / MCSTs). Modules built a
 
 ## Next actions
 - Buddy: shared-memory build (this repo); host-side disk/log check on the VPS.
-- Hermes: fill `dev-hermes.md`; describe `feat/multi-tenant` vs `main`.
+- Hermes: correct the branch section of `dev-hermes.md` (see above); list which of the 26 commits hold work worth porting.
+- Buddy (needs Ben's go-ahead): read-only review of the 26 commits to decide what to port.
