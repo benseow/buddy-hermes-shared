@@ -41,6 +41,8 @@ SaaS for Singapore housing-estate managing agents (MAs / MCSTs). Modules built a
 - CueVue avatar widget live on agenchub.com; credit cap still open; refund decision due by 4 Oct 2026.
 - Exploring a PSG-qualified-company vehicle (PSG ceased 29 Sep 2026, replaced by EDGE). Meeting next week. Exploratory only.
 
+- Staff retrieval chat ("Ask Agen C Hub", read-only look-ups over the existing modules) built and tested on a LOCAL branch `feature/staff-chat-prototype` of `mcst-ai-ops` (5 Oct 2026). NOT pushed, NOT deployed, not merged. Do not build a competing chat; wait for Ben's go-ahead on deployment.
+
 ## Next actions
 - Buddy: shared-memory build (this repo); host-side disk/log check on the VPS.
 - Hermes: correct the branch section of `dev-hermes.md` (see above). The per-commit port list is no longer needed.
