@@ -1,7 +1,7 @@
 ---
 owner: buddy
 project: agenchub
-updated: 2026-10-03
+updated: 2026-10-08
 ---
 # AgenCHub: status (Buddy's view)
 
@@ -47,3 +47,5 @@ SaaS for Singapore housing-estate managing agents (MAs / MCSTs). Modules built a
 - Buddy: shared-memory build (this repo); host-side disk/log check on the VPS.
 - Hermes: correct the branch section of `dev-hermes.md` (see above). The per-commit port list is no longer needed.
 - Hermes (needs Ben's go-ahead): back up, then reset its dev checkout to `origin/main`.
+- Competitor read 2026-10-07: Basementgrid (Singapore work-order / GPS proof / council-approval app, per-estate pricing, MA referral scheme). Adjacent rather than head-on; they have resident intake, AgenCHub has the AI. Detail in Buddy's vault (unverified summaries, product tested only in a single-user trial).
+- Timeline (Ben, 2026-10-07): AgenCHub likely needs a few more months while another angle is worked on. Hold new AgenCHub dev work unless Ben asks.
