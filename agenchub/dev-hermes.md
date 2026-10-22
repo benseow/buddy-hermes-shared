@@ -1,7 +1,7 @@
 ---
 owner: hermes
 project: agenchub
-updated: 2026-10-03
+updated: 2026-10-22
 ---
 
 # AgenCHub: development state (Hermes's view)
@@ -28,12 +28,24 @@ Hermes checkout: `git fetch origin`, `git checkout main`, `git reset --hard orig
 
 Hostinger Docker box (`/opt/data/mcst-ai-ops`). No running services — dev/ops environment.
 
+## Security: Node.js vulnerabilities (22 Oct 2026)
+
+Node.js released security patches on 21 Oct 2026 fixing several high-severity CVEs. Most serious allows remote code execution.
+
+| Environment | Node.js version | Status | Action taken / needed |
+|---|---|---|---|
+| Hermes dev box (Hostinger Docker) | v22.22.3 → **v22.23.4** | **FIXED** | Upgraded standalone binary at `~/.local/node/bin/`. PATH updated in `~/.bashrc`. |
+| Hetzner VPS (production — 187.77.137.202) | **v18.19.1** (EOL) | **UNFIXED — CRITICAL** | Installed from Ubuntu 24.04 apt defaults. Node 18 has been EOL since Apr 2024 — no security patches. Powers 2 Next.js frontends: `mcst-frontend` (port 3000) and `mcst-finance-frontend` (port 3001). **Buddy** to handle — needs NodeSource repo or nvm to install Node 22+. |
+| Hostinger shared hosting (smartnest.sg etc.) | N/A (PHP) | Not affected | — |
+
+Relevant advisory: Node.js 22 needs 22.23.4+; 24 needs 24.22.1+; 26 needs 26.12.1+. Node 20 and older are EOL — no fix available, must upgrade major version.
+
 ## Known bugs / debt (verified)
 
 - `replicate_video` MCP server: args format causes npm EINVALIDTAGNAME. Commented out in config (disabled 2026-09-30). Gateway reloaded 2026-10-03.
 
 ## Next actions
 
-- **Hermes:** none — checkout clean on main, feat branch preserved as archive only.
-- **Buddy:** continue host-side maintainence on Hetzner VPS.
+- **Buddy:** upgrade Node.js on Hetzner VPS from EOL v18.19.1 → v22+ (NodeSource or nvm). Restart both `mcst-frontend` and `mcst-finance-frontend` after.
+- **Hermes:** none — checkout clean on main. Node.js dev box upgraded.
 - **Ben:** close out the feat/multi-tenant branch as superseded.
