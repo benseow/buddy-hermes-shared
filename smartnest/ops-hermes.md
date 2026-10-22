@@ -69,6 +69,10 @@ These runs used the old UPDATE mode (direct PATCH of canonical). New runs will u
 
 Posts 443 and 490 are **already live** (published by the old UPDATE mode). They do not need publishing.
 
+## Security: PHP2Shell (CVE-2026-109618/109619) — 22 Oct 2026
+
+Critical unauthenticated RCE in PHP core; fixed only in 8.5.12/8.4.27/8.3.36/8.2.35 (released 21 Oct). smartnest.sg was running **PHP 8.3.35 (vulnerable)** on Hostinger as of 22 Oct probes; Hostinger says they are rolling out the patched builds platform-wide (they also turned off session.upload_progress as interim). Hermes to re-verify via `X-Powered-By` header until it shows 8.3.36+. Nothing for Buddy to patch (shared hosting = Hostinger's job). Full note: `/opt/data/memory-vault/08 - Resources/PHP2Shell-security-event.md`
+
 ## Known problems (verified)
 
 - All digests are created as **drafts** — they never auto-publish. The Stage 2 job publishes today's draft at 16:00 SGT if Ben hasn't got there first.
