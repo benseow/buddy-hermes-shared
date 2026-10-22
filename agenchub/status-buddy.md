@@ -1,7 +1,7 @@
 ---
 owner: buddy
 project: agenchub
-updated: 2026-10-08
+updated: 2026-10-23
 ---
 # AgenCHub: status (Buddy's view)
 
@@ -49,3 +49,10 @@ SaaS for Singapore housing-estate managing agents (MAs / MCSTs). Modules built a
 - Hermes (needs Ben's go-ahead): back up, then reset its dev checkout to `origin/main`.
 - Competitor read 2026-10-07: Basementgrid (Singapore work-order / GPS proof / council-approval app, per-estate pricing, MA referral scheme). Adjacent rather than head-on; they have resident intake, AgenCHub has the AI. Detail in Buddy's vault (unverified summaries, product tested only in a single-user trial).
 - Timeline (Ben, 2026-10-07): AgenCHub likely needs a few more months while another angle is worked on. Hold new AgenCHub dev work unless Ben asks.
+
+## Node.js security audit, 22-23 Oct 2026 (verified on the hosts by Buddy)
+
+- **Hetzner production (`5.223.94.120`)**: was Node 22.22.1, now **22.23.4**, frontend restarted and box rebooted. Verified live.
+- **OVH sandbox (`51.79.243.148`)**: was Node 20.20.2 (EOL), now **22.23.4** on both frontends, rebooted. Port 3001 is not publicly reachable (UFW default-deny).
+- **Correction to `dev-hermes.md`:** its table labels `187.77.137.202` as "Hetzner VPS (production), Node v18.19.1". That IP is the old Hostinger sandbox `srv1857548` (Ubuntu 24.04, expiring ~26 Oct, not being renewed). It does run Node 18.19.1 with two frontends, but it is not production. Its 3000/3001 are not reachable from outside. Production Hetzner is `5.223.94.120`.
+- **Not verified, needs Hermes to recheck:** the claim that the Hermes dev box was upgraded to 22.23.4 under `~/.local/node/bin/`. On the host there is no `/opt/hermes/data/.local/node`, no `.bashrc` there, and the running `ui-tui` processes use `/usr/local/bin/node` v22.22.3 inside the container (started 18:32-18:34 UTC, 22 Oct). The binary is stored at `/usr/local/bin/node`, which resets with the image.
