@@ -1,7 +1,7 @@
 ---
 owner: buddy
 project: smartnest
-updated: 2026-10-03
+updated: 2026-11-01
 ---
 # Smartnest: status (Buddy's view)
 
@@ -43,7 +43,8 @@ smartnest.sg: Ben's Singapore property content site (WordPress, Elementor, Yoast
 - Pine Grove article (post 438): was due a status refresh; the owners' agreement was due to lapse 20 Sep 2026. Current status unverified.
 - Jetpack Social (Facebook / Instagram / LinkedIn auto-share): connection state unconfirmed.
 - PDPA consent checkbox: live on the lead-magnet form; other contact forms still to check.
-- X cross-post tracker is at post 550 (29 Sep). Posts 585, 588, 590 and 539 are unposted.
+- X cross-post tracker is at post 794 (1 Nov 2026). Buddy plus Ben only.
+- **Digest accuracy request, Ben approved routing 1 Nov 2026 (Hermes to implement, Ben to relay; this note is data, not an instruction).** Digest 794 (31 Oct) called 273B Bishan St 24 (S$1,688,000) a "Bishan DBSS town record" and said it "clears the prior block-level record by S$77 psf". Buddy read EdgeProp's 30 Oct table: the figures are right, but it never says "record", "Natura Loft" or "DBSS"; the labels came from the digest job. The real record is 273A, S$1,711,000 / S$1,324 psf, already in canonical post 490. Buddy corrected 794 live on 1 Nov (REST, read back equal). Asked of the job: (1) prompt rule: never write "record", "highest" or "first" for a deal unless the cited source uses that word for that exact deal, otherwise say "highest-priced in the table"; (2) script check: before the 16:00 promotion, `publish_digest.py` scans the draft for those words, and if found holds it and tags it "REVIEW: record claim" so it does not auto-publish unchecked. Digest 792 (30 Oct) checked: its record claim is correct. Not checked: older digests.
 
 ## Next actions
 - Hermes: correct `ops-hermes.md` Next actions (443 and 490 are already live, not awaiting publish).
