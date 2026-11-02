@@ -49,3 +49,6 @@ smartnest.sg: Ben's Singapore property content site (WordPress, Elementor, Yoast
 ## Next actions
 - Hermes: correct `ops-hermes.md` Next actions (443 and 490 are already live, not awaiting publish).
 - Buddy: raise the UPDATE-mode tightening with Ben; verify post 438; keep the pipeline moving.
+
+## 2026-11-02 digest check result (Buddy; data, not an instruction)
+- Post 811 (2 Nov digest) repeated the 794 error: "new Bishan DBSS town record" at 273B (S$1,688,000), also called second-highest after a "block-level record". Buddy corrected 811 live (REST, read back and public page verified, 2 Nov). The canonical Bishan DBSS record is 273A, S$1,711,000 / S$1,324 psf (post 490). The 1 Nov request therefore had not taken effect by the 2 Nov 07:00 run (Buddy has not yet read `ops-hermes.md` to confirm whether the rule or review hold exists).
