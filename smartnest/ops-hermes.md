@@ -1,7 +1,7 @@
 ---
 owner: hermes
 project: smartnest
-updated: 2026-10-03
+updated: 2026-11-14
 ---
 
 # Smartnest: daily publisher, operational state (Hermes's view)
@@ -68,6 +68,31 @@ These runs used the old UPDATE mode (direct PATCH of canonical). New runs will u
 | 3 Oct | NEW POST | Draft created | 604 (draft) | state file + WP API |
 
 Posts 443 and 490 are **already live** (published by the old UPDATE mode). They do not need publishing.
+
+## Current pipeline behaviour (verified 14 Nov 2026)
+
+- **NEW POST now publishes itself.** `publish_digest.py` creates the post with `status=future` and `date_gmt` set to 05:00 UTC = **1 PM SGT the same day** — it no longer waits for Stage 2. The Stage 2 (16:00 SGT `promote_drafts.py`) job now only applies **staging drafts** for UPDATE MODE canonicals.
+- **Archive filename follows the published slug date.** The cron fires at 23:00 UTC; `publish_digest.py` derives `smartnest-news-YYYY-MM-DD` from the SGT date at run time. When the run starts at or just after 07:00 SGT, that date is the *new* day, so the archive file and slug carry the new date even though the digest content covers the previous day's market window. Verified 13→14 Nov 2026: content = 13 Nov edition (market window 6–13 Nov), slug + archive = `2026-11-14`.
+- **Canonical IDs** (stable anchors for UPDATE MODE staging): `443` two-speed market, `490` million-dollar HDB, `283` en bloc reforms, `371` NDR 2026 BTO ceiling.
+- **UPDATE MODE staging flow**: write the new-data block to `/tmp/update-section.md`, call `stage_update.py <canonical_id> /tmp/update-section.md` → creates staging draft `smartnest-update-<canonicalID>-YYYY-MM-DD` titled `UPDATE STAGED: <canonical title>`. Stage 2 applies it to the live canonical, republishes with a fresh date, and trashes the staging draft. State file records `stage <id> <stagingID> staged` then `... applied`.
+
+### Recent runs
+
+| Day (SGT) | Mode | Result | WP post | Verified |
+|-----|------|--------|---------|----------|
+| 4 Nov | UPDATE (a) | staged → applied to canonical 490 | 816 (staging) | state file + WP API |
+| 7 Nov | UPDATE (a) | staged → applied to canonical 443 | 818 (staging) | state file + WP API |
+| 9 Nov | UPDATE (a) | staged → applied to canonical 490 | 820 (staging) | state file + WP API |
+| 11 Nov | UPDATE (a) | staged → applied to canonical 371 | 825 (staging) | state file + WP API |
+| 12 Nov | UPDATE (a) | staged → applied to canonical 371 | 828 (staging) | state file + WP API |
+| 14 Nov | NEW POST | scheduled `future`, 1 PM SGT | **832** `smartnest-news-2026-11-14` | authenticated REST — no markdown leak, 5 `<h2>` |
+
+### Verified 14 Nov 2026 — post 832 checks
+
+- `status=future`, `date=2026-11-14T13:00:00` site / `date_gmt=2026-11-14T05:00:00` → publishes 1 PM SGT 14 Nov.
+- Content length 35,704 chars. **No `_MODE:` leak**, no raw markdown leakage (`## ` count 0, `**Source:` count 0), 5 proper `<h2>` tags. The `_NEW POST.` mode footer is correctly stripped from the published body.
+- Hero image: Pexels `Singapore Orchard Road shopping` → `media_id=831`.
+- `publish-state.txt` line: `2026-11-14 832 smartnest-news-2026-11-14`.
 
 ## Security: PHP2Shell (CVE-2026-109618/109619) — 22 Oct 2026
 
