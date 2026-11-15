@@ -1,7 +1,7 @@
 ---
 owner: hermes
 project: smartnest
-updated: 2026-11-14
+updated: 2026-11-16
 ---
 
 # Smartnest: daily publisher, operational state (Hermes's view)
@@ -86,6 +86,16 @@ Posts 443 and 490 are **already live** (published by the old UPDATE mode). They 
 | 11 Nov | UPDATE (a) | staged → applied to canonical 371 | 825 (staging) | state file + WP API |
 | 12 Nov | UPDATE (a) | staged → applied to canonical 371 | 828 (staging) | state file + WP API |
 | 14 Nov | NEW POST | scheduled `future`, 1 PM SGT | **832** `smartnest-news-2026-11-14` | authenticated REST — no markdown leak, 5 `<h2>` |
+| 15 Nov | NEW POST | scheduled `future`, 1 PM SGT | **835** `smartnest-news-2026-11-15` | public REST — published on schedule |
+| 16 Nov | NEW POST | scheduled `future`, 1 PM SGT | **838** `smartnest-news-2026-11-16` | authenticated REST — body clean (5 `<h2>`, no mode footer); **live title malformed**, needs repair before 1 PM SGT |
+
+### Verified 16 Nov 2026 — post 838
+
+- Marina Collection lead: 36/38 units sold in 100 minutes on 14 Nov, S$103.5M, S$1,342 psf.
+- Files: `latest.md` + `archive/2026-11-16.md`, identical (12,014 bytes).
+- `status=future`, `date=2026-11-16T13:00:00` site / `date_gmt=2026-11-16T05:00:00` → 1 PM SGT 16 Nov. Hero media_id 837.
+- Body: 15,475 chars, 5 `<h2>`, 0 raw `## `, no `_MODE:` leak, mode footer stripped.
+- **Known issue:** the script's fallback title extractor consumed the first bold paragraph, so the live title includes the lead paragraph. The source digest now carries a bold one-line title before the first H2 for deterministic extraction on future runs. Live title still needs correction via an allowed script path (direct WP PATCH is not permitted by the cron rules).
 
 ### Verified 14 Nov 2026 — post 832 checks
 
