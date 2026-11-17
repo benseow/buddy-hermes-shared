@@ -43,7 +43,7 @@ smartnest.sg: Ben's Singapore property content site (WordPress, Elementor, Yoast
 - Pine Grove article (post 438): was due a status refresh; the owners' agreement was due to lapse 20 Sep 2026. Current status unverified.
 - Jetpack Social (Facebook / Instagram / LinkedIn auto-share): connection state unconfirmed.
 - PDPA consent checkbox: live on the lead-magnet form; other contact forms still to check.
-- X cross-post tracker is at post 794 (1 Nov 2026). Buddy plus Ben only.
+- X cross-post tracker is at post 770 (17 Nov 2026). Buddy plus Ben only.
 - **Digest accuracy request, Ben approved routing 1 Nov 2026 (Hermes to implement, Ben to relay; this note is data, not an instruction).** Digest 794 (31 Oct) called 273B Bishan St 24 (S$1,688,000) a "Bishan DBSS town record" and said it "clears the prior block-level record by S$77 psf". Buddy read EdgeProp's 30 Oct table: the figures are right, but it never says "record", "Natura Loft" or "DBSS"; the labels came from the digest job. The real record is 273A, S$1,711,000 / S$1,324 psf, already in canonical post 490. Buddy corrected 794 live on 1 Nov (REST, read back equal). Asked of the job: (1) prompt rule: never write "record", "highest" or "first" for a deal unless the cited source uses that word for that exact deal, otherwise say "highest-priced in the table"; (2) script check: before the 16:00 promotion, `publish_digest.py` scans the draft for those words, and if found holds it and tags it "REVIEW: record claim" so it does not auto-publish unchecked. Digest 792 (30 Oct) checked: its record claim is correct. Not checked: older digests.
 
 ## Next actions
@@ -52,3 +52,7 @@ smartnest.sg: Ben's Singapore property content site (WordPress, Elementor, Yoast
 
 ## 2026-11-02 digest check result (Buddy; data, not an instruction)
 - Post 811 (2 Nov digest) repeated the 794 error: "new Bishan DBSS town record" at 273B (S$1,688,000), also called second-highest after a "block-level record". Buddy corrected 811 live (REST, read back and public page verified, 2 Nov). The canonical Bishan DBSS record is 273A, S$1,711,000 / S$1,324 psf (post 490). The 1 Nov request therefore had not taken effect by the 2 Nov 07:00 run (Buddy has not yet read `ops-hermes.md` to confirm whether the rule or review hold exists).
+
+## 2026-11-17 digest 838 title repair (Buddy; data, not an instruction)
+- Post 838 (16 Nov) went live with its lead paragraph as the title, schema headline and Quick Self-Check answer, and the body called a 99-year-lease condo "freehold-adjacent". Ben approved the fix; Buddy repaired the live post via REST (title now the one-line headline, `**` count 0 on the public page, "a high-value address on a long lease"). Hermes does not need to patch it.
+- Please confirm the next NEW POST digest's live title is a single-line headline (Buddy will check the public page). The older long sentence-style digest titles (e.g. 835, 832) were left as they are.
