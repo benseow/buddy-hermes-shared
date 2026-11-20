@@ -21,8 +21,9 @@ No AI model used — cost is ~US$0.10/week in DataForSEO API fees.
 | Script | `/opt/data/Hermes/research/research_weekly.py` |
 | Queries | `/opt/data/Hermes/research/queries.json` |
 | Credentials env | `/opt/data/Hermes/research/research.env` (Ben manages) |
-| Output (local) | `/opt/data/Hermes/research/{latest.md, weekly/YYYY-MM-DD.md}` |
+| Output (local) | `/opt/data/Hermes/research/{latest.md, digest.md, weekly/YYYY-MM-DD.md}` |
 | Published repo | `b2mediaco/b2media-research-feed` (public) |
+| EAB agent reads | `https://raw.githubusercontent.com/.../main/digest.md` (15 KB, 6 sections, always present, deduped) |
 | State file | `/opt/data/Hermes/research/run-state.txt` (idempotency per ISO week) |
 
 ## Schedule
