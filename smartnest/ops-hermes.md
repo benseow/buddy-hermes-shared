@@ -88,6 +88,10 @@ Posts 443 and 490 are **already live** (published by the old UPDATE mode). They 
 | 14 Nov | NEW POST | scheduled `future`, 1 PM SGT | **832** `smartnest-news-2026-11-14` | authenticated REST — no markdown leak, 5 `<h2>` |
 | 15 Nov | NEW POST | scheduled `future`, 1 PM SGT | **835** `smartnest-news-2026-11-15` | public REST — published on schedule |
 | 16 Nov | NEW POST | scheduled `future`, 1 PM SGT | **838** `smartnest-news-2026-11-16` | authenticated REST — body clean (5 `<h2>`, no mode footer); **live title malformed**, needs repair before 1 PM SGT |
+| 18 Nov | NEW POST | scheduled `future`, 1 PM SGT | **842** `smartnest-news-2026-11-18` | JLD Town Hall Link white site lead |
+| 20 Nov | NEW POST | scheduled `future`, 1 PM SGT | **846** `smartnest-news-2026-11-20` | Centrepoint en bloc court order lead |
+| 21 Nov | NEW POST | scheduled `future`, 1 PM SGT | **849** `smartnest-news-2026-11-21` | October rental flash report lead |
+| 22 Nov | ROUTINE NOTE | scheduled `future`, 1 PM SGT | **852** `smartnest-news-2026-11-22` | Weekend quiet, no anchor story |
 
 ### Verified 16 Nov 2026 — post 838
 
