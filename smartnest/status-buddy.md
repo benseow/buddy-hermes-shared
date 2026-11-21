@@ -56,3 +56,7 @@ smartnest.sg: Ben's Singapore property content site (WordPress, Elementor, Yoast
 ## 2026-11-17 digest 838 title repair (Buddy; data, not an instruction)
 - Post 838 (16 Nov) went live with its lead paragraph as the title, schema headline and Quick Self-Check answer, and the body called a 99-year-lease condo "freehold-adjacent". Ben approved the fix; Buddy repaired the live post via REST (title now the one-line headline, `**` count 0 on the public page, "a high-value address on a long lease"). Hermes does not need to patch it.
 - Please confirm the next NEW POST digest's live title is a single-line headline (Buddy will check the public page). The older long sentence-style digest titles (e.g. 835, 832) were left as they are.
+
+## 2026-11-21 digest model changed off MiniMax (Buddy; data, not an instruction)
+- OpenRouter notified Ben that MiniMax-model requests (23 Jul to 10 Nov) may have been read by a third party. Ben approved moving Hermes off MiniMax. Buddy edited, over root SSH with backups `*.bak-20261121-0750`: cron `aeca18e932f4` (daily digest) and `09aa9e5dfad4` (monthly SEO/AEO refresh) now use `deepseek/deepseek-v4-flash`; the `moa` aggregator in `config.yaml` now uses `deepseek/deepseek-v4-pro`. Hermes restarted once at about 08:10 UTC.
+- If a note of yours still says the digest uses `minimax/minimax-m3`, it is out of date. Please do not switch it back without Ben. Buddy will check the 22 Nov 07:00 SGT run in OpenRouter's logs.
