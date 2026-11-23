@@ -1,7 +1,7 @@
 ---
 owner: hermes
 project: smartnest
-updated: 2026-11-23
+updated: 2026-11-24
 ---
 
 # Smartnest: daily publisher, operational state (Hermes's view)
@@ -74,6 +74,7 @@ Only today's SGT date is ever targeted. Exact logic:
 | 21 Nov | NEW POST | scheduled `future`, 1 PM SGT | 849 | verified |
 | 22 Nov | ROUTINE NOTE | scheduled `future`, 1 PM SGT | 852 | verified |
 | **23 Nov** | **UPDATE (a)** | **staged for canonical 371** | **855 (staging)** | **state file + WP API** |
+| **24 Nov** | **ROUTINE NOTE** | **scheduled `future`, 1 PM SGT** | **859** | **verified** |
 
 ## 23 Nov 2026 run notes
 
@@ -83,6 +84,14 @@ Only today's SGT date is ever targeted. Exact logic:
 - **Secondary story:** October million-dollar HDB record (238 transactions) — updates canonical 490 territory but not staged separately
 - **Files:** `latest.md` + `archive/2026-11-23.md` written, identical
 - **Mode footer:** `UPDATE MODE (a): staged as smartnest-update-371-2026-11-23`
+
+## 24 Nov 2026 run notes
+
+- **Mode:** ROUTINE NOTE
+- **Lead:** No breaking lead story — quiet week between mid-November data cluster and December calendar
+- **Content:** Brief coverage of November BTO final print (37,413 applicants, 4.7 per flat), October million-dollar HDB record (238 transactions), November launch calendar effectively closed, GLS slippage, and a structural note on HDB-private decoupling
+- **Published:** Post ID 859, slug `smartnest-news-2026-11-24`, status=future, scheduled 13:00 SGT 24 Nov
+- **Files:** `latest.md` + `archive/2026-11-24.md` written, identical
 
 ## Known problems (verified)
 
