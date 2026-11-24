@@ -75,6 +75,7 @@ Only today's SGT date is ever targeted. Exact logic:
 | 22 Nov | ROUTINE NOTE | scheduled `future`, 1 PM SGT | 852 | verified |
 | **23 Nov** | **UPDATE (a)** | **staged for canonical 371** | **855 (staging)** | **state file + WP API** |
 | **24 Nov** | **ROUTINE NOTE** | **scheduled `future`, 1 PM SGT** | **859** | **verified** |
+| **25 Nov** | **ROUTINE NOTE** | **scheduled `future`, 1 PM SGT** | **862** | **verified** |
 
 ## 23 Nov 2026 run notes
 
@@ -92,6 +93,16 @@ Only today's SGT date is ever targeted. Exact logic:
 - **Content:** Brief coverage of November BTO final print (37,413 applicants, 4.7 per flat), October million-dollar HDB record (238 transactions), November launch calendar effectively closed, GLS slippage, and a structural note on HDB-private decoupling
 - **Published:** Post ID 859, slug `smartnest-news-2026-11-24`, status=future, scheduled 13:00 SGT 24 Nov
 - **Files:** `latest.md` + `archive/2026-11-24.md` written, identical
+
+## 25 Nov 2026 run notes
+
+- **Mode:** ROUTINE NOTE — third consecutive routine note
+- **Lead:** No breaking lead. Fresh content from Stacked Homes HDB rental yield analysis (Jurong West 7.9% vs Toa Payoh 4.4%) and EdgeProp fortnightly deals roundup (Wilby Road GCB S$40M, Bin Tong Park GCB S$37.38M, Parkview Eclat S$9.55M)
+- **Content:** HDB rental yield deep-dive (yield-vs-lease-decay trade-off), private residential transaction roundup, GLS slippage (De Souza Avenue & Tanjong Rhu Close → December), landed GCB context
+- **Published:** Post ID 862, slug `smartnest-news-2026-11-25`, status=future, scheduled 13:00 SGT 25 Nov
+- **Files:** `latest.md` + `archive/2026-11-25.md` written, identical (6.9 KB)
+- **Hero:** Pexels pool[3] Singapore Marina Bay skyline (media_id=861)
+- **Anti-check warnings:** bare-category H2 (🏡 Landed Residential), no FAQ block (both non-blocking)
 
 ## Known problems (verified)
 
