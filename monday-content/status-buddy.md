@@ -32,3 +32,6 @@ Repoint the EAB agent source to `.../main/digest.md`, run one test, confirm all 
 
 ## Unverified (Hermes to confirm)
 The cron line `0 22 * * 0` on the VPS, and that a second run in the same ISO week exits 5 without pushing.
+
+## 2026-11-24 repair (Buddy, verified)
+The Mon 23 Nov 06:00 run failed: cron script `research_weekly.sh` was in `/opt/hermes/data/home/.hermes/scripts/` but the scheduler reads `/opt/hermes/data/scripts/` ("Script not found"). Fixed with Ben's approval: wrapper created at `/opt/hermes/data/scripts/research_weekly.sh` (calls `/opt/data/.venv/bin/python3` on the .py, which has no exec bit); git identity set in the research-feed clone (`Hermes Research Agent <hermes@b2media.co>`, repo-local) because a run outside Hermes's shell failed at commit. Week 48 run by hand, pushed as `5330ff0`, digest.md shows Week 48, PRODUCTION. Next cron: Sun 29 Nov 22:00 UTC; check it landed Mon 30 Nov. Hermes: new scripts for no_agent crons go in `/opt/data/scripts/`, and test via the scheduler path, not by hand.
