@@ -94,15 +94,16 @@ Only today's SGT date is ever targeted. Exact logic:
 - **Published:** Post ID 859, slug `smartnest-news-2026-11-24`, status=future, scheduled 13:00 SGT 24 Nov
 - **Files:** `latest.md` + `archive/2026-11-24.md` written, identical
 
-## 25 Nov 2026 run notes
+## 26 Nov 2026 run notes
 
-- **Mode:** ROUTINE NOTE — third consecutive routine note
-- **Lead:** No breaking lead. Fresh content from Stacked Homes HDB rental yield analysis (Jurong West 7.9% vs Toa Payoh 4.4%) and EdgeProp fortnightly deals roundup (Wilby Road GCB S$40M, Bin Tong Park GCB S$37.38M, Parkview Eclat S$9.55M)
-- **Content:** HDB rental yield deep-dive (yield-vs-lease-decay trade-off), private residential transaction roundup, GLS slippage (De Souza Avenue & Tanjong Rhu Close → December), landed GCB context
-- **Published:** Post ID 862, slug `smartnest-news-2026-11-25`, status=future, scheduled 13:00 SGT 25 Nov
-- **Files:** `latest.md` + `archive/2026-11-25.md` written, identical (6.9 KB)
-- **Hero:** Pexels pool[3] Singapore Marina Bay skyline (media_id=861)
-- **Anti-check warnings:** bare-category H2 (🏡 Landed Residential), no FAQ block (both non-blocking)
+- **Mode:** NEW POST
+- **Lead story:** URA launches Tanjong Rhu Close and De Souza Avenue GLS sites (26 Nov 2026) — ~915 homes combined. Tanjong Rhu Close (D15, city-fringe, ~505 homes) expected 4-6 bids at S$1,460-1,560 psf ppr. De Souza Avenue (Beauty World, D21, ~410 homes) expected 1-3 bids at S$800-1,050 psf ppr. Tenders close Jan/Feb 2027.
+- **Why NEW POST:** GLS site launches (supply-side) don't overlap any existing canonical (ID 443 two-speed covers bid results, not launches; ID 490/283/371 unrelated).
+- **Also covered:** 2027 property tax rebate (15% HDB / 10% capped S$100, announced 23 Nov); October developer sales (1,716 units, 12-month high); Savills 2027 outlook (S$35-45B from ~S$55B)
+- **Published:** Post ID 865, slug `smartnest-news-2026-11-27`, status=future, scheduled 13:00 SGT 27 Nov
+- **Files:** `latest.md` + `archive/2026-11-26.md` written, identical (10.8 KB)
+- **Hero:** Pexels pool[5] Singapore construction building crane (media_id=864)
+- **Anti-check warnings:** bare-category H2 (🏡 Landed Residential), no FAQ block (non-blocking)
 
 ## Known problems (verified)
 
@@ -111,6 +112,6 @@ Only today's SGT date is ever targeted. Exact logic:
 
 ## Next actions
 
-- **Hermes:** Stage 2 promotes staging draft 855 at 16:00 SGT today (applies to canonical 371, republishes with fresh date, trashes staging draft).
+- **Hermes:** Stage 2 promotes staging draft 855 at 16:00 SGT today (applies to canonical 371, republishes with fresh date, trashes staging draft) — if not already applied.
 - **Buddy:** verify Stage 2 cron fires at 08:00 UTC (16:00 SGT).
 - **Ben:** No action needed unless you want to review staging draft 855 before the 16:00 SGT promotion window.
